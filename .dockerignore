@@ -1,0 +1,7 @@
+README.md
+
+.mypy_cache/
+.pytest_cache/
+__pycache__/
+.venv/
+.env*

@@ -1,0 +1,33 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+fastapi = "*"
+gunicorn = "*"
+uvicorn = "*"
+python-decouple = "*"
+
+[dev-packages]
+black = "*"
+pytest = "*"
+httpx = "*"
+
+[requires]
+python_version = "3.11"
+
+[scripts]
+start = "uvicorn src.main:app --reload"
+black = "black src/"
+test = "pytest ."
+build = "docker build -f Dockerfile -t serverless-py ."
+build-emp = "docker build -f Dockerfile.empty -t empty-py ."
+run = "docker run -p 8000:8000 --rm --name serverless-py-con -it serverless-py"
+run-stage = "docker run -e MODE=stage -p 8000:8000 --rm --name serverless-py-con -it serverless-py"
+run-prod = "docker run -e PORT=8001 -e MODE=prod --env-file .env-prod -p 8000:8001 --rm --name serverless-py-con -it serverless-py"
+run-emp = "docker run -p 1234:8000 --rm --name empty_py -it empty-py"
+shell = "docker exec -it serverless-py-con bash"
+shell-emp = "docker exec -it empty_py bash"
+push = "docker push serverless-py"
+clear = "docker image prune -a --filter 'until=24h'"

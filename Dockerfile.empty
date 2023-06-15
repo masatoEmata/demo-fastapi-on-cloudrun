@@ -1,0 +1,8 @@
+# python version
+FROM python:3.10.12-slim
+
+#  copy code, pipfile
+COPY . /app/
+WORKDIR /app/
+
+CMD ["python", "-m", "http.server"]

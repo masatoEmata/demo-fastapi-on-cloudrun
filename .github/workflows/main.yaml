@@ -21,7 +21,7 @@ jobs:
       - name: Install requirements
         run: |
           pip install pipenv
-          pipenv install --system --deploy
+          pipenv install --system --dev
       - name: Run tests
         env:
           MODE: 'github actions'

@@ -38,6 +38,23 @@ jobs:
         uses: docker/setup-qemu-action@v2
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
+      # https://github.com/google-github-actions/auth#authenticating-via-service-account-key-json-1
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
       - name: Build container image
         run: |
-          docker build -f Dockerfile -t serverless-py .
+          docker build --platform=linux/amd64 -f Dockerfile -t serverless-py .
+          docker tag serverless-py ${{ secrets.CONTAINER_IMAGE_URL }}:${GITHUB_RUN_ID}
+          gcloud auth configure-docker ${{ secrets.GCLOUD_REGION }}-docker.pkg.dev
+          docker push ${{ secrets.CONTAINER_IMAGE_URL }} --all-tags
+      - name: Deploy container to Cloud Run
+        run: |
+          gcloud run deploy serverless-py-run \
+            --image ${{ secrets.CONTAINER_IMAGE_URL }}:${GITHUB_RUN_ID} \
+            --allow-unauthenticated \
+            --region=${{ secrets.GCLOUD_REGION }} \
+            --project=${{ secrets.GCLOUD_PROJECT_ID }}
+        # gcloud artifacts repositories create serverless-py-repo --repository-format=docker --location=${{ secrets.GCLOUD_REGION }}'"

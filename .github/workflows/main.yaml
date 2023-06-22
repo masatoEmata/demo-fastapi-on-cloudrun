@@ -47,13 +47,13 @@ jobs:
       - name: Build container image
         run: |
           docker build --platform=linux/amd64 -f Dockerfile -t serverless-py .
-          docker tag serverless-py ${{ secrets.CONTAINER_IMAGE_URL }}:latest
+          docker tag serverless-py ${{ secrets.CONTAINER_IMAGE_URL }}:${{ secrets.GITHUB_RUN_ID }}
           gcloud auth configure-docker ${{ secrets.GCLOUD_REGION }}-docker.pkg.dev
           docker push ${{ secrets.CONTAINER_IMAGE_URL }} --all-tags
       - name: Deploy container to Cloud Run
         run: |
           gcloud run deploy serverless-py-run \
-            --image ${{ secrets.CONTAINER_IMAGE_URL }}:latest \
+            --image ${{ secrets.CONTAINER_IMAGE_URL }}:${{ secrets.GITHUB_RUN_ID }} \
             --allow-unauthenticated \
             --region=${{ secrets.GCLOUD_REGION }} \
             --project=${{ secrets.GCLOUD_PROJECT_ID }}

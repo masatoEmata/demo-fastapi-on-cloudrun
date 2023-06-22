@@ -40,4 +40,9 @@ jobs:
         uses: docker/setup-buildx-action@v2
       - name: Build container image
         run: |
-          docker build -f Dockerfile -t serverless-py .
+          docker build --platform=linux/amd64 -f Dockerfile -t serverless-py .
+          docker tag serverless-py-amd64 us-central1-docker.pkg.dev/emata-demo/serverless-py-repo/serverless-py:latest
+          docker push us-central1-docker.pkg.dev/emata-demo/serverless-py-repo/serverless-py --all-tags
+          gcloud run deploy serverless-py-run --image us-central1-docker.pkg.dev/emata-demo/serverless-py-repo/serverless-py:latest --allow-unauthenticated --region=us-central1 --project=emata-demo
+        # gcloud auth configure-docker us-central1-docker.pkg.dev
+        # gcloud artifacts repositories create serverless-py-repo --repository-format=docker --location=us-central1'"

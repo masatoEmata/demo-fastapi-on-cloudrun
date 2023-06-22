@@ -41,7 +41,7 @@ jobs:
       - name: Build container image
         run: |
           docker build --platform=linux/amd64 -f Dockerfile -t serverless-py .
-          docker tag serverless-py-amd64 us-central1-docker.pkg.dev/emata-demo/serverless-py-repo/serverless-py:latest
+          docker tag serverless-py us-central1-docker.pkg.dev/emata-demo/serverless-py-repo/serverless-py:latest
           docker push us-central1-docker.pkg.dev/emata-demo/serverless-py-repo/serverless-py --all-tags
           gcloud run deploy serverless-py-run --image us-central1-docker.pkg.dev/emata-demo/serverless-py-repo/serverless-py:latest --allow-unauthenticated --region=us-central1 --project=emata-demo
         # gcloud auth configure-docker us-central1-docker.pkg.dev

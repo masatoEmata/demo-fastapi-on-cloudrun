@@ -27,6 +27,17 @@ jobs:
           MODE: 'github actions'
         run: |
           pipenv run pytest
-  # build_deploy:
-  #   needs: test
-  #   runs-on: ubuntu-latest
+  build_deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      # https://github.com/docker/setup-buildx-action
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Build container image
+        run: |
+          docker build -f Dockerfile -t serverless-py

@@ -8,17 +8,21 @@ fastapi = "*"
 gunicorn = "*"
 uvicorn = "*"
 python-decouple = "*"
+google-auth = "*"
+google-cloud-secret-manager = "*"
 
 [dev-packages]
 black = "*"
 pytest = "*"
 httpx = "*"
+mypy = "*"
 
 [requires]
 python_version = "3.10"
 
 [scripts]
-start = "uvicorn src.main:app --reload"
+start = "bash -c 'uvicorn src.main:app --reload'"
+update_prod_secrets = "gcloud secrets versions add py_env_file --data-file .env-prod"
 black = "black src/"
 test = "pytest ."
 build = "docker build -f Dockerfile -t serverless-py ."

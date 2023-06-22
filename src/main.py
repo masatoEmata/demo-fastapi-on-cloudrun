@@ -4,7 +4,7 @@ from src.env import config
 
 app = FastAPI()
 
-MODE = config("MODE", default="dev-default")
+MODE = config("MODE", cast=str, default="test")
 
 
 @app.get("/")

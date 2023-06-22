@@ -27,7 +27,6 @@ jobs:
           MODE: 'github actions'
         run: |
           pipenv run pytest
-
   build_deploy:
     needs: test
     runs-on: ubuntu-latest

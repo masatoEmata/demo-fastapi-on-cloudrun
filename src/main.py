@@ -6,7 +6,7 @@ from gcloud_secret_configure.secret import GoogleSecretFetcher
 
 app = FastAPI()
 
-config = get_config(GoogleSecretFetcher())
+config = get_config(GoogleSecretFetcher(), secret_label="py_env_file")
 MODE = config("MODE", cast=str, default="test")
 
 

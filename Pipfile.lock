@@ -147,11 +147,11 @@
         },
         "gcloud-secret-configure": {
             "hashes": [
-                "sha256:65ec182cae58c455da2e84dbad9c3c1088ebe66ee4181856adfb7ebd4b04b858",
-                "sha256:b1fc1440b4d3db8f00ec0cc6645132e645ac534677ab0746425859759871bbf8"
+                "sha256:8e9985bb56e2d52599af2563075634a2c2e4f7fdb9c577351282a08dde57a1a9",
+                "sha256:9973507bdd536fb21139889d677194b618003af35db232cc80f1388d743cc1c6"
             ],
             "index": "pypi",
-            "version": "==0.0.1"
+            "version": "==0.0.2"
         },
         "google-api-core": {
             "extras": [

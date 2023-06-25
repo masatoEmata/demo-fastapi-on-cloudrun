@@ -11,16 +11,11 @@ BASE_DIR = pathlib.Path(__file__).parent
 ENV_PATH = BASE_DIR / ".env"
 
 
-def get_google_secret_payload(
-    secret_label="py_env_file", version="latest"
-) -> str | None:
+def get_google_secret_payload(secret_label="env_file", version="latest") -> str | None:
     try:
         _, project_id = google.auth.default()
     except google.auth.exceptions.DefaultCredentialsError:
         project_id = None
-
-    print(project_id)
-
     if project_id is None:
         return None
 
@@ -88,7 +83,6 @@ def get_config(use_gcloud=True):
     if use_gcloud:
         payload = get_google_secret_payload()
         if payload is not None:
-            print("payload: ", payload)
             return Config(RepositoryString(payload))
 
     from decouple import config
@@ -97,3 +91,6 @@ def get_config(use_gcloud=True):
 
 
 config = get_config()
+# sample usage:
+# from src.env import config
+# MODE = config("MODE", cast=str, default="default")

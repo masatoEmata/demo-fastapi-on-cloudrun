@@ -10,6 +10,7 @@ uvicorn = "*"
 python-decouple = "*"
 google-auth = "*"
 google-cloud-secret-manager = "*"
+gcloud-secret-configure = "*"
 
 [dev-packages]
 black = "*"

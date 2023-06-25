@@ -22,6 +22,7 @@ mypy = "*"
 python_version = "3.10"
 
 [scripts]
+auth = "gcloud config set project emata-demo"
 start = "bash -c 'uvicorn src.main:app --reload'"
 black = "black src/"
 test = "pytest ."
